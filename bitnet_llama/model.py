@@ -22,8 +22,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """ PyTorch BitNetLLaMA model."""
+import os
 import math
-from typing import List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
@@ -870,6 +871,74 @@ class LlamaPreTrainedModel(PreTrainedModel):
     def _set_gradient_checkpointing(self, module, value=False):
         if isinstance(module, LlamaModel):
             module.gradient_checkpointing = value
+
+    def extract_binarized_weights(self):
+        binarized_weights_dict = {}
+        for name, module in self.named_modules():
+            if isinstance(module, BitLinear):
+                binarized_weights = module.binarize_weights_groupwise()
+                for key, value in binarized_weights.items():
+                    binarized_weights_dict[f"{name}.{key}"] = value
+        return binarized_weights_dict
+
+    def binarize_bitlinear_weights(self):
+        """
+        Binarizes weights of BitLinear layers and returns the updated state_dict.
+        """
+        state_dict = self.state_dict()
+        for name, module in self.named_modules():
+            if name == "lm_head":
+                continue
+            if isinstance(module, BitLinear):
+                state_dict[name + ".weight"] = module.binarize_weights_groupwise()
+        return state_dict
+
+    def save_pretrained(
+        self,
+        save_directory: Union[str, os.PathLike],
+        is_main_process: bool = True,
+        state_dict: Optional[dict] = None,
+        save_function: Callable = torch.save,
+        push_to_hub: bool = False,
+        max_shard_size: Union[int, str] = "10GB",
+        safe_serialization: bool = False,
+        variant: Optional[str] = None,
+        token: Optional[Union[str, bool]] = None,
+        save_peft_format: bool = True,
+        save_binarized_weights: bool = True,
+        **kwargs,
+    ):
+        if save_binarized_weights:
+            # use the binarized weights
+            state_dict = self.binarize_bitlinear_weights()
+            super().save_pretrained(
+                state_dict=state_dict,
+                save_directory=save_directory,
+                is_main_process=is_main_process,
+                save_function=save_function,
+                push_to_hub=push_to_hub,
+                max_shard_size=max_shard_size,
+                safe_serialization=safe_serialization,
+                variant=variant,
+                token=token,
+                save_peft_format=save_peft_format,
+                **kwargs,
+            )
+        else:
+            # use the original save_pretrained
+            super().save_pretrained(
+                save_directory=save_directory,
+                is_main_process=is_main_process,
+                state_dict=state_dict,
+                save_function=save_function,
+                push_to_hub=push_to_hub,
+                max_shard_size=max_shard_size,
+                safe_serialization=safe_serialization,
+                variant=variant,
+                token=token,
+                save_peft_format=save_peft_format,
+                **kwargs,
+            )
 
 
 LLAMA_INPUTS_DOCSTRING = r"""
