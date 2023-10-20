@@ -256,4 +256,6 @@ pyrightconfig.json
 transformers/
 test*/
 *.pth
+bitllama-train-clm-falcon-korean-stack-hq/
+wandb/
 

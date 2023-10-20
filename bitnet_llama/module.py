@@ -119,14 +119,24 @@ class BitLinear(nn.Linear):
 
 class BitLinearOptimized(nn.Linear):
     def __init__(self, in_features, out_features, bias=True, num_groups=1):
-        super(BitLinearOptimized, self).__init__(in_features, out_features, bias)
+        super().__init__(in_features, out_features, bias)
         self.num_groups = num_groups
         self.eps = 1e-5
 
-        # Initialize 1-bit quantized weights
-        self.register_buffer("quantized_weights", torch.sign(self.weight))
+        # Initialize 1-bit quantized weights and store them
+        self.register_buffer("quantized_weights", torch.sign(self.weight.data))
         # Clear the original weights to save memory
         del self.weight
+
+    @property
+    def weight(self):
+        # Return the dequantized weights when accessed
+        return self.dequantize_weights()
+
+    @weight.setter
+    def weight(self, value):
+        # Update the quantized_weights when the weight property is set
+        self.quantized_weights.data = torch.sign(value)
 
     def dequantize_weights(self):
         # Compute alpha for the weights
