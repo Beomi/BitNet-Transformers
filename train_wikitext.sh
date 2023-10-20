@@ -3,6 +3,7 @@ export WANDB_PROJECT=bitllama-wikitext
 
 python run_clm.py \
 --dataset_name='wikitext' \
+--dataset_config_name='wikitext-103-v1' \
 --model_type='llama' \
 --config_name='./bitllama-110M-config' \
 --tokenizer_name='beomi/llama-2-ko-7b' \
