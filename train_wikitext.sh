@@ -1,4 +1,4 @@
-# export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 export WANDB_PROJECT=bitllama-wikitext
 
 python run_clm.py \
@@ -9,8 +9,8 @@ python run_clm.py \
 --tokenizer_name='beomi/llama-2-ko-7b' \
 --num_train_epochs=10 \
 --block_size=2048 \
---per_device_train_batch_size=8 \
---gradient_accumulation_steps=4 \
+--per_device_train_batch_size=1 \
+--gradient_accumulation_steps=1 \
 --optim adafactor \
 --learning_rate=8e-4 \
 --torch_dtype bfloat16 \

@@ -39,24 +39,34 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 
 ## GPU Mem Usage Comparison
 
+**Train Config**
+
+- Batch size: 1
+- Gradient accumulation: 1
+- Seq length: 2048
+- Model: `LLamaForCausalLM` with `BitLinear` layer
+- Model size: 110M
+
 **Original LLAMA**
 
 ```bash
 +-----------------------------------------+----------------------+----------------------+
-|   1  NVIDIA H100 PCIe               Off | 00000000:5A:00.0 Off |                    0 |
-| N/A   65C    P0             279W / 350W |  49010MiB / 81559MiB |     90%      Default |
+|   0  NVIDIA H100 PCIe               Off | 00000000:49:00.0 Off |                    0 |
+| N/A   62C    P0             302W / 350W |   6637MiB / 81559MiB |     84%      Default |
 |                                         |                      |             Disabled |
 +-----------------------------------------+----------------------+----------------------+
 ```
 
 **BitLLAMA - 16bit**
 
-- Use bf16(or fp16) on-the-fly when needed
+- Use bf16(or fp16) to store model weights
+- Use `-1` or `1` for 1-bit weight (but saved with 16bit)
+- Use more memory than original LLAMA: It saves 1-bit weight and 16bit weight together
 
 ```bash
 +-----------------------------------------+----------------------+----------------------+
-|   1  NVIDIA H100 PCIe               Off | 00000000:5A:00.0 Off |                    0 |
-| N/A   64C    P0             277W / 350W |  48289MiB / 81559MiB |     92%      Default |
+|   0  NVIDIA H100 PCIe               Off | 00000000:49:00.0 Off |                    0 |
+| N/A   52C    P0             248W / 350W |   6905MiB / 81559MiB |     89%      Default |
 |                                         |                      |             Disabled |
 +-----------------------------------------+----------------------+----------------------+
 ```
