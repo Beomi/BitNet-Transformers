@@ -40,7 +40,11 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 **Original LLAMA**
 
 ```bash
-[1] NVIDIA H100 PCIe | 58°C,   0 % | 49023 / 81559 MB | datadriven(49010M)
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA H100 PCIe               Off | 00000000:5A:00.0 Off |                    0 |
+| N/A   65C    P0             279W / 350W |  49010MiB / 81559MiB |     90%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
 ```
 
 **BitLLAMA**
@@ -48,7 +52,11 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 - Use bf16(or fp16) on-the-fly when needed
 
 ```bash
-[1] NVIDIA H100 PCIe | 62°C, 100 % | 48289 / 81559 MB | datadriven(48276M)
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA H100 PCIe               Off | 00000000:5A:00.0 Off |                    0 |
+| N/A   64C    P0             277W / 350W |  48289MiB / 81559MiB |     92%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
 ```
 
 ## Todo
