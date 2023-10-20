@@ -47,7 +47,7 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 +-----------------------------------------+----------------------+----------------------+
 ```
 
-**BitLLAMA**
+**BitLLAMA - 16bit**
 
 - Use bf16(or fp16) on-the-fly when needed
 
@@ -57,6 +57,24 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 | N/A   64C    P0             277W / 350W |  48289MiB / 81559MiB |     92%      Default |
 |                                         |                      |             Disabled |
 +-----------------------------------------+----------------------+----------------------+
+```
+
+**BitLLAMA - 8bit**
+
+- Use bf16(or fp16) on-the-fly when needed
+- Use 8bit to save 1-bit weight
+
+```bash
+TBD
+```
+
+**BitLLAMA - 1bit**
+
+- Use bf16(or fp16) on-the-fly when needed
+- Use 1bit to save 1-bit weight
+
+```bash
+TBD
 ```
 
 ## Todo
