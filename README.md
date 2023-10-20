@@ -51,11 +51,11 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 
 - Uses **250MB** GPU memory for Model weights
 
-**BitLLAMA - 16bit**
+**BitLLAMA - Mixed 16bit**
 
 - Uses **200MB** GPU memory for Model weights
 - Use bf16(or fp16) to store model weights
-- Use `-1` or `1` for 1-bit weight (but saved with 16bit)
+- Use int8 to store `-1`/`1` 1-bit weights
 - Use more memory when training than original LLAMA: It saves 1-bit weight and 16bit weight together
 
 **BitLLAMA - 8bit**
