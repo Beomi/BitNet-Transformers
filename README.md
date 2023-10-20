@@ -45,40 +45,24 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 - Gradient accumulation: 1
 - Seq length: 2048
 - Model: `LLamaForCausalLM` with `BitLinear` layer
-- Model size: 110M
+- Model size: 47,452,672 (47.5M)
 
-**Original LLAMA**
+**Original LLAMA - 16bit**
 
-```bash
-+-----------------------------------------+----------------------+----------------------+
-|   0  NVIDIA H100 PCIe               Off | 00000000:49:00.0 Off |                    0 |
-| N/A   62C    P0             302W / 350W |   6637MiB / 81559MiB |     84%      Default |
-|                                         |                      |             Disabled |
-+-----------------------------------------+----------------------+----------------------+
-```
+- Uses **250MB** GPU memory for Model weights
 
 **BitLLAMA - 16bit**
 
+- Uses **200MB** GPU memory for Model weights
 - Use bf16(or fp16) to store model weights
 - Use `-1` or `1` for 1-bit weight (but saved with 16bit)
-- Use more memory than original LLAMA: It saves 1-bit weight and 16bit weight together
-
-```bash
-+-----------------------------------------+----------------------+----------------------+
-|   0  NVIDIA H100 PCIe               Off | 00000000:49:00.0 Off |                    0 |
-| N/A   52C    P0             248W / 350W |   6905MiB / 81559MiB |     89%      Default |
-|                                         |                      |             Disabled |
-+-----------------------------------------+----------------------+----------------------+
-```
+- Use more memory when training than original LLAMA: It saves 1-bit weight and 16bit weight together
 
 **BitLLAMA - 8bit**
 
+- Uses **100MB** GPU memory for Model weights
 - Use bf16(or fp16) on-the-fly when needed
-- Use 8bit to save 1-bit weight
-
-```bash
-TBD
-```
+- Use 8bit to save 1-bit BitLinear weight & other weights
 
 **BitLLAMA - 1bit**
 
