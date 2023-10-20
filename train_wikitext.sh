@@ -1,9 +1,10 @@
 export CUDA_VISIBLE_DEVICES=1
+export WANDB_PROJECT=bitllama-wikitext
 
 python run_clm.py \
---train_file='../falcon_korean_stack_hq_w_trans_10k_sample.json' \
+--dataset_name='wikitext' \
 --model_type='llama' \
---config_name='./test-config' \
+--config_name='./bitllama-110M-config' \
 --tokenizer_name='beomi/llama-2-ko-7b' \
 --num_train_epochs=10 \
 --block_size=2048 \
@@ -13,14 +14,14 @@ python run_clm.py \
 --learning_rate=8e-4 \
 --torch_dtype bfloat16 \
 --bf16 \
---output_dir='bitllama-train-clm-falcon-korean-stack-hq' \
+--output_dir='bitllama-wikitext' \
 --do_train \
 --save_strategy='epoch' \
 --logging_strategy='steps' \
 --logging_first_step \
 --logging_steps=10 \
 --save_total_limit=1 \
---run_name='bitllama-train-clm-falcon-korean-stack-hq' \
+--run_name='bitllama-wikitext' \
 --overwrite_output_dir \
 --report_to='wandb' \
 --low_cpu_mem_usage
