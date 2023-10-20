@@ -29,6 +29,8 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 
 ## Train Wikitext-103
 
+![Train Loss Graph when train BitLLAMA using Wikitext-103](./static/W&B_Chart_2023.10.20_wikitext.png)
+
 > You can track metrics via wandb
 
 ```bash
