@@ -63,6 +63,8 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 
 - [x] Add `BitLinear` layer
 - [x] Add `LLamaForCausalLM` model with `BitLinear` layer
-  - [x] Update `.save_pretrained` method (for 1-bit weight saving)
+    - [x] Update `.save_pretrained` method (for 1-bit weight saving)
 - [x] Add sample code for LM training
 - [ ] Update `BitLinear` layer to use 1-bit weight
+    - [ ] Use uint8 instead of bfloat16
+    - [ ] Use custom cuda kernel for 1-bit weight
