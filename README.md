@@ -13,6 +13,9 @@
 git clone https://github.com/beomi/bitnet-transformers
 cd bitnet-transformers
 
+# Install requirements
+pip install -r clm_requirements.txt
+
 # Clone transformers repo
 git clone https://github.com/huggingface/transformers
 pip install -e transformers
@@ -24,6 +27,13 @@ ln -s $(pwd)/bitnet_llama/modeling_llama.py ./transformers/src/transformers/mode
 
 We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the file is linked, any changes made to the file will be reflected in the `transformers` repo.
 
+## Train Wikitext-103
+
+> You can track metrics via wandb
+
+```bash
+./train_wikitext.sh
+```
 
 ## GPU Mem Usage Comparison
 
@@ -41,3 +51,10 @@ We'll overwrite `bitnet_llama/modeling_llama.py` into `transformers`. Since the 
 [1] NVIDIA H100 PCIe | 62°C, 100 % | 48289 / 81559 MB | datadriven(48276M)
 ```
 
+## Todo
+
+- [x] Add `BitLinear` layer
+- [x] Add `LLamaForCausalLM` model with `BitLinear` layer
+  - [x] Update `.save_pretrained` method (for 1-bit weight saving)
+- [x] Add sample code for LM training
+- [ ] Update `BitLinear` layer to use 1-bit weight

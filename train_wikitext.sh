@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=1
+# export CUDA_VISIBLE_DEVICES=1
 export WANDB_PROJECT=bitllama-wikitext
 
 python run_clm.py \
