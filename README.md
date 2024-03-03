@@ -1,4 +1,4 @@
-# 0️⃣1️⃣🤗 BitNet-Transformers: Huggingface Transformers Implementation of "BitNet: Scaling 1-bit Transformers for Large Language Models" in pytorch with Llama(2) Architecture
+# 0️⃣1️⃣🤗 BitNet-Transformers: Hugging Face Transformers Implementation of "BitNet: Scaling 1-bit Transformers for Large Language Models" in pytorch with Llama(2) Architecture
 
 ![BitNet Architecture](./static/bitnet-arch.png)
 
