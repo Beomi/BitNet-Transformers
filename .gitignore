@@ -259,3 +259,5 @@ test*/
 bitllama-train-clm-falcon-korean-stack-hq/
 wandb/
 
+bitllama-wikitext/
+bitllama-wikitext _10epoch/
