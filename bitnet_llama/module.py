@@ -134,7 +134,7 @@ class BitLinearOptimized(nn.Linear):
     @property
     def weight(self):
         # Return the dequantized weights when accessed
-        return self.ternarize_weights()
+        return self.dequantize_weights()
 
     @weight.setter
     def weight(self, value):

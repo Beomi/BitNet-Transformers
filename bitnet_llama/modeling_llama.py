@@ -876,7 +876,7 @@ class LlamaPreTrainedModel(PreTrainedModel):
         binarized_weights_dict = {}
         for name, module in self.named_modules():
             if isinstance(module, BitLinear):
-                binarized_weights = module.binarize_weights_groupwise()
+                binarized_weights = module.ternarize_weights_groupwise()
                 for key, value in binarized_weights.items():
                     binarized_weights_dict[f"{name}.{key}"] = value
         return binarized_weights_dict
@@ -890,7 +890,7 @@ class LlamaPreTrainedModel(PreTrainedModel):
             if name == "lm_head":
                 continue
             if isinstance(module, BitLinear):
-                state_dict[name + ".weight"] = module.binarize_weights_groupwise()
+                state_dict[name + ".weight"] = module.ternarize_weights_groupwise()
         return state_dict
 
     def save_pretrained(
